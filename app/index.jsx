@@ -1,11 +1,16 @@
+import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { Slot, Stack } from "expo-router";
-export default function App() {
+
+export default function Index() {
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-    </Stack>
+    <View style={styles.container}>
+      <Text>Dora</Text>
+      <StatusBar style="auto" />
+      <Link href={"/Profile"} style={{ color: "blue" }}>
+        Go to the Profile
+      </Link>
+    </View>
   );
 }
 
