@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import {
   Image,
@@ -10,12 +10,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "../constants/images";
+import CustomButton from "../components/CustomButton";
 
 export default function Index() {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
-        <View className="flex items-center justify-center">
+        <View className=" w-full min-h-[85vh] flex items-center justify-center  px-4">
           <Image
             source={images.logo}
             className="w-[130px] h-[84px]"
@@ -42,8 +43,16 @@ export default function Index() {
             Where Creativity Meets Innovation: Embark on a Journey of Limitless
             Exploration with Aora
           </Text>
+          <CustomButton
+            title="Contiue With Email"
+            containerStyle="w-full mt-7"
+            handlePress={() => {
+              Redirect("/sign-in");
+            }}
+          />
         </View>
       </ScrollView>
+      <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 }
