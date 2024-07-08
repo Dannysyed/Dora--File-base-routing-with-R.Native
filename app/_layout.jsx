@@ -19,10 +19,11 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (error) return error;
-    if (fontsLoaded) return SplashScreen.hideAsync();
-    if (!fontsLoaded && !error) return null;
+    if (error) throw error;
+    if (fontsLoaded) SplashScreen.hideAsync();
   }, [fontsLoaded, error]);
+
+  if (!fontsLoaded && !error) return null;
 
   return (
     <Stack>

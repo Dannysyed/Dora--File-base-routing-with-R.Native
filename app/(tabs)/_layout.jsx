@@ -12,7 +12,10 @@ const TabsLayout = () => {
           resizeMode="contain"
           tintColor={color}
         />
-        <Text className={`${focused ? "font-psemibold" : "font-pregular"}`}>
+        <Text
+          className={`${focused ? "font-psemibold" : "font-pregular"}`}
+          style={{ color: color }}
+        >
           {name}
         </Text>
       </View>
@@ -20,7 +23,19 @@ const TabsLayout = () => {
   };
   return (
     <>
-      <Tabs screenOptions={{ tabBarShowLabel: false }}>
+      <Tabs
+        screenOptions={{
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: "#FFA001",
+          tabBarInactiveTintColor: "#CDCDE0",
+          tabBarStyle: {
+            backgroundColor: "#161622",
+            borderTopWidth: 1,
+            borderTopColor: "#232533",
+            height: 58,
+          },
+        }}
+      >
         <Tabs.Screen
           name="home"
           options={{
@@ -35,7 +50,7 @@ const TabsLayout = () => {
               />
             ),
           }}
-        />{" "}
+        />
         <Tabs.Screen
           name="bookmark"
           options={{
@@ -50,7 +65,7 @@ const TabsLayout = () => {
               />
             ),
           }}
-        />{" "}
+        />
         <Tabs.Screen
           name="create"
           options={{
@@ -65,7 +80,7 @@ const TabsLayout = () => {
               />
             ),
           }}
-        />{" "}
+        />
         <Tabs.Screen
           name="profiles"
           options={{
