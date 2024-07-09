@@ -47,7 +47,7 @@ export default function Index() {
             title="Contiue With Email"
             containerStyle="w-full mt-7"
             handlePress={() => {
-              Redirect("/sign-in");
+              router.push("/sign-in");
             }}
           />
         </View>
