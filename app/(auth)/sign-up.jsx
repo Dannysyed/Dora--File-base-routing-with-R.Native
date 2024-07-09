@@ -11,9 +11,14 @@ import images from "../../constants/images";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link } from "expo-router";
+import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
   const [form, setFrom] = useState({ email: "", password: "", username: "" });
+
+  let submit = () => {
+    createUser();
+  };
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
@@ -46,7 +51,11 @@ const SignUp = () => {
             otherStyles="mt-7"
           />
 
-          <CustomButton title={"Sign up"} containerStyle={"mt-6"} />
+          <CustomButton
+            title={"Sign up"}
+            containerStyle={"mt-6"}
+            handlePress={submit}
+          />
           <View className="mt-4 justify-center pt-5 flex-row gap-2">
             <Text className="text-white text-base ">
               Already have a account?{" "}
