@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -10,14 +11,34 @@ import React, { useState } from "react";
 import images from "../../constants/images";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
   const [form, setFrom] = useState({ email: "", password: "", username: "" });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   let submit = () => {
-    createUser();
+    if (form.username && form.email && form.password !== "") {
+      setIsSubmitting(true);
+      try {
+        const result = createUser({
+          username: form.username,
+          email: form.email,
+          password: form.password,
+        });
+        // context will be used
+        router.replace("/home");
+      } catch (error) {
+        Alert.alert("Error", error.message);
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      Alert.alert("Error", "Please fill the form");
+      return null;
+    }
   };
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -55,6 +76,7 @@ const SignUp = () => {
             title={"Sign up"}
             containerStyle={"mt-6"}
             handlePress={submit}
+            isLoading={isSubmitting}
           />
           <View className="mt-4 justify-center pt-5 flex-row gap-2">
             <Text className="text-white text-base ">

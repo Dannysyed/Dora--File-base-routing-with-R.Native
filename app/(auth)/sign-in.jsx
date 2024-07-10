@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -10,10 +11,30 @@ import React, { useState } from "react";
 import FormField from "../../components/FormField";
 import images from "../../constants/images";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { signIn } from "../../lib/appwrite";
 
 const SignIn = () => {
   const [form, setFrom] = useState({ email: "", password: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  let submitLogin = async () => {
+    if (form.email && form.password !== "") {
+      setIsSubmitting(true);
+      try {
+        const result = await signIn(form.email, form.password);
+
+        // context will be used
+        router.replace("/home");
+      } catch (error) {
+        Alert.alert("Error", error.message);
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      Alert.alert("Error", "Please fill the form");
+    }
+  };
   return (
     <SafeAreaView className="bg-primary h-full ">
       <ScrollView>
@@ -38,7 +59,12 @@ const SignIn = () => {
             otherStyles="mt-7"
           />
           <Text className="text-white self-end mt-3">Forgot password</Text>
-          <CustomButton title={"Log in"} containerStyle={"mt-4"} />
+          <CustomButton
+            title={"Log in"}
+            containerStyle={"mt-4"}
+            handlePress={submitLogin}
+            isLoading={isSubmitting}
+          />
           <View className="mt-4 justify-center pt-5 flex-row gap-2">
             <Text className="text-white text-base ">
               Don't have an account?{" "}
