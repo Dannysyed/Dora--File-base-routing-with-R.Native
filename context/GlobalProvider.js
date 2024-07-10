@@ -15,7 +15,7 @@ const GlobalProvider = ({ children }) => {
           setIsLogged(true);
           setUser(res);
         } else {
-          setIsLogged(true);
+          setIsLogged(false);
           setUser(null);
         }
       })

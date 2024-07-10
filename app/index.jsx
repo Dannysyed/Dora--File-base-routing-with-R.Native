@@ -14,11 +14,11 @@ import CustomButton from "../components/CustomButton";
 import { useGlobalContext } from "../context/GlobalProvider";
 
 export default function Index() {
-  const { loading, isLoggedIn } = useGlobalContext();
-  if (loading && !isLoggedIn) {
+  const { loading, isLogged } = useGlobalContext();
+  if (!loading && isLogged) {
     return <Redirect href={"/home"} />;
   }
-  console.log(isLogged, isLoggedIn, "index");
+  console.log(loading, isLogged, "indssdex");
 
   return (
     <SafeAreaView className="bg-primary h-full">
