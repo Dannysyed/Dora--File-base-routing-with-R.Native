@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
+  const { loading, isLoggedIn, user } = useGlobalContext();
+
   return (
     <View>
-      <Text>Home</Text>
+      <Text> Hi {user.username} welcome to app</Text>
     </View>
   );
 };
