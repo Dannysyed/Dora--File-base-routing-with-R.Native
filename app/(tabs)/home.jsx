@@ -62,11 +62,10 @@ const Home = () => {
               </View>
             </View>
             <SearchInput />
-            <View className="w-full flex-1 border-2 border-red-50 pb-8">
+            {/* <View className="w-full flex-1 border-2 border-red-50 pb-8">
               <Text className="text-gray-100 text-2xl">Trending Video</Text>
               <Trending post={[{ id: "12" }, { id: "13" }]} />
-              {/* <Trending post={[]} /> */}
-            </View>
+            </View> */}
           </View>
         )}
         refreshControl={

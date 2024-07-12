@@ -13,8 +13,8 @@ const VideoCard = ({
 }) => {
   const [play, setPlay] = useState(false);
   return (
-    <View className="flex-1 px-4 mt-14">
-      <View className="justify-between items-start flex-row ">
+    <View className="flex flex-col items-center px-4 mb-14">
+      <View className="justify-between gap-3 items-start flex-row ">
         <View className="border border-secondary h-[46px] w-[46px] rounded-lg p-0.5">
           <Image
             source={{ uri: avatar }}
@@ -35,7 +35,14 @@ const VideoCard = ({
       </View>
 
       {play ? (
-        <Text className="text-white">Play</Text>
+        <Text
+          className="text-white"
+          onPress={() => {
+            setPlay(false);
+          }}
+        >
+          Play
+        </Text>
       ) : (
         <TouchableOpacity
           onPress={() => {
