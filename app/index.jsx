@@ -12,12 +12,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import images from "../constants/images";
 import CustomButton from "../components/CustomButton";
 import { useGlobalContext } from "../context/GlobalProvider";
+import { useEffect } from "react";
 
 export default function Index() {
   const { loading, isLogged } = useGlobalContext();
   if (!loading && isLogged) {
     return <Redirect href={"/home"} />;
   }
+  useEffect(() => {
+    if (!loading && isLogged) {
+      return <Redirect href={"/home"} />;
+    }
+  }, [loading]);
   console.log(loading, isLogged, "indssdex");
 
   return (
