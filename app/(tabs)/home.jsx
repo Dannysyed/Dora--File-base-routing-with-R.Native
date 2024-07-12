@@ -15,7 +15,7 @@ import FormField from "../../components/FormField";
 import SearchInput from "../../components/SearchInput";
 import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
-import { getAllPosts } from "../../lib/appwrite";
+import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
 
@@ -23,6 +23,7 @@ const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const { loading, isLoggedIn, user } = useGlobalContext();
   let { data: posts, refetch } = useAppwrite(getAllPosts);
+  let { data: latestPosts } = useAppwrite(getLatestPosts);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -43,11 +44,6 @@ const Home = () => {
           <View className="px-4 my-6 space-y-6 ">
             <View className="flex-row justify-between items-start mb-6">
               <View>
-                {/* <Image
-        source={{ uri: video.thumbnail }}
-        resizeMode="contain"
-        className="w-10 h-10"
-      /> */}
                 <Text className="text-gray-100 text-base">Welcome Back</Text>
                 <Text className="text-white text-xl font-psemibold">
                   jsMastery
@@ -62,10 +58,10 @@ const Home = () => {
               </View>
             </View>
             <SearchInput />
-            {/* <View className="w-full flex-1 border-2 border-red-50 pb-8">
+            <View className="w-full  pb-8">
               <Text className="text-gray-100 text-2xl">Trending Video</Text>
-              <Trending post={[{ id: "12" }, { id: "13" }]} />
-            </View> */}
+              <Trending post={latestPosts} />
+            </View>
           </View>
         )}
         refreshControl={
