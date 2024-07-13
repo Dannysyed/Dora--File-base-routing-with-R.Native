@@ -73,9 +73,7 @@ const Trending = ({ post }) => {
   return (
     <FlatList
       data={post}
-      keyExtractor={(item) => {
-        item.id;
-      }}
+      keyExtractor={(item) => item.$id}
       renderItem={({ item }) => (
         <TrendingItem activeItem={activeItem} item={item} />
       )}
