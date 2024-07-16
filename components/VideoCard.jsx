@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import icons from "../constants/icons";
 import images from "../constants/images";
+import { ResizeMode, Video } from "expo-av";
 
 const VideoCard = ({
   video: {
@@ -11,6 +12,13 @@ const VideoCard = ({
     creator: { username, avatar },
   },
 }) => {
+  const handlePlaybackStatusUpdate = (status) => {
+    if (status.didJustFinish) {
+      setPlay(false);
+    } else if (status.error) {
+      console.error("Playback error:", status.error);
+    }
+  };
   const [play, setPlay] = useState(false);
   return (
     <View className="flex flex-col items-center px-4 mb-14">
@@ -35,14 +43,17 @@ const VideoCard = ({
       </View>
 
       {play ? (
-        <Text
-          className="text-white"
-          onPress={() => {
-            setPlay(false);
+        <Video
+          source={{
+            uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
           }}
-        >
-          Play
-        </Text>
+          className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
+          resizeMode={ResizeMode.CONTAIN}
+          useNativeControls
+          shouldPlay={true}
+          onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+          onError={(error) => console.error("Video error:", error)}
+        />
       ) : (
         <TouchableOpacity
           onPress={() => {

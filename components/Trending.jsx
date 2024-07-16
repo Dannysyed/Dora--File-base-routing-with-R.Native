@@ -12,6 +12,7 @@ import EmptyState from "./EmptyState";
 import * as Animatable from "react-native-animatable";
 import icons from "../constants/icons";
 import { ResizeMode, Video } from "expo-av";
+
 const zoomIn = {
   0: {
     scale: 0.9,
@@ -29,9 +30,18 @@ const zoomOut = {
     scale: 0.9,
   },
 };
+
 let TrendingItem = ({ item, activeItem }) => {
   const [play, setPlay] = useState(false);
-  console.log(item.video, "//////////////");
+
+  const handlePlaybackStatusUpdate = (status) => {
+    if (status.didJustFinish) {
+      setPlay(false);
+    } else if (status.error) {
+      console.error("Playback error:", status.error);
+    }
+  };
+
   return (
     <Animatable.View
       className="mr-5"
@@ -40,16 +50,15 @@ let TrendingItem = ({ item, activeItem }) => {
     >
       {play ? (
         <Video
-          source={{ uri: item.video }}
+          source={{
+            uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+          }}
           className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
           resizeMode={ResizeMode.CONTAIN}
           useNativeControls
-          shouldPlay
-          onPlaybackStatusUpdate={(status) => {
-            if (status.didJustFinish) {
-              setPlay(false);
-            }
-          }}
+          shouldPlay={true}
+          onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+          onError={(error) => console.error("Video error:", error)}
         />
       ) : (
         <TouchableOpacity
@@ -64,7 +73,6 @@ let TrendingItem = ({ item, activeItem }) => {
             className="w-52 h-72 rounded-[33px] my-5 overflow-hidden shadow-lg shadow-black/40"
             resizeMode="cover"
           />
-
           <Image
             source={icons.play}
             className="w-12 h-12 absolute"
@@ -75,11 +83,13 @@ let TrendingItem = ({ item, activeItem }) => {
     </Animatable.View>
   );
 };
+
 const Trending = ({ post }) => {
-  const [activeItem, setActiveItem] = useState(post[1]);
+  const [activeItem, setActiveItem] = useState(post[0]?.$id);
+
   const viewableItemsChanged = ({ viewableItems }) => {
     if (viewableItems.length > 0) {
-      setActiveItem(viewableItems[0].key);
+      setActiveItem(viewableItems[0].item.$id);
     }
   };
 
